@@ -108,11 +108,6 @@ while run:
        wow = 2
        woow = 2
     
-
-
-
-    #if yt
-
     if wow == 1:
         xt += vel_ball
     
