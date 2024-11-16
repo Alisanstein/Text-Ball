@@ -43,6 +43,7 @@ wow = 1
 woow = 2
 s1 = 0
 s2 = 0
+stop = 0
 
 #Display
 win = pygame.display.set_mode((1000,800))
@@ -93,6 +94,13 @@ while run:
         y1 += vel
         yb1 += vel
 
+    #tagalob
+    if keys[pygame.K_q]:
+        wow = 1
+    
+    if keys[pygame.K_p]:
+        wow = 2
+
     #ball
     if (yt <= (y1+height) and yt > yb1) and (xt <= x1 and xt >= (x1-width)):
         wow = 1
@@ -115,15 +123,19 @@ while run:
         xt -= vel_ball
     
     if yt <= 0:
-        woow = 1
+        woow = 3
 
     elif yt >= 800-h_text:
-        woow = 2
+        woow = 4
     
     if woow == 1:
         yt += vel_ball
     elif woow == 2:
         yt -= vel_ball
+    elif woow == 3:
+        yt += 8
+    elif woow == 4:
+        yt -= 8
 
     #scores
     if xt>= 1000:
@@ -134,24 +146,24 @@ while run:
         s1 += 1
         wow = 1
 
-    message_to_screen(str(s1),(255,255,255),-200,-100,"small")
-    message_to_screen(str(s2),(255,255,255),-200, 100,"small")
 
-    if s2 == chand:
-        looser = player2 + ' lost'
-        message_to_screen(looser,(255,255,255),-100,100)
+    if s1 == chand:
+        winer = player2 + ' won'
+        message_to_screen(winer,(255,255,255),-100,100)
         pygame.display.update()
         time.sleep(5)
         break
     
-    elif s1 == chand:
-        looser = player1 + ' lost'
-        message_to_screen(looser,(255,255,255),-100,-100)
+    elif s2 == chand:
+        winer = player1 + ' won'
+        message_to_screen(winer,(255,255,255),-100,-100)
         pygame.display.update()
         time.sleep(5)
         break
     
     win.fill((0,0,0))       #Drawing
+    message_to_screen(str(s2),(255,255,255),-200,-100,"small")
+    message_to_screen(str(s1),(255,255,255),-200, 100,"small")
     message_to_screen(player1,(255,255,255),-255,-100,"small")
     message_to_screen(player2,(255,255,255),-255,100,"small")
     pygame.draw.line(win,(176, 253, 174),(500,0),(500,800),5)
@@ -159,5 +171,9 @@ while run:
     pygame.draw.rect(win, (154, 192, 255), (x2,y2,width,height))
     draw_text(name, text_font, (255,255,255), xt, yt)
     pygame.display.update()
+
+    if stop == 0:
+        time.sleep(3)
+        stop += 1
 
 pygame.quit()
